@@ -17,11 +17,18 @@ spring:
     time-zone: Asia/Shanghai
     date-format: yyyy-MM-dd HH:mm:ss
 
+  # ========== 跨域配置（关键：适配Vue前端跨域调用） ==========
+  cors:
+    allowed-origins: "*" # 开发环境允许所有来源，生产环境指定Vue前端域名（如http://localhost:8081）
+    allowed-methods: GET,POST,PUT,DELETE,OPTIONS
+    allowed-headers: "*"
+    max-age: 3600
+
   # ========== MySQL数据库配置（核心，适配8.0.33版本） ==========
   datasource:
     # MySQL 8.x驱动类（必须用com.mysql.cj.jdbc.Driver，5.x用com.mysql.jdbc.Driver）
     driver-class-name: com.mysql.cj.jdbc.Driver
-    # JDBC连接地址：需提前创建page_algorithm数据库，替换localhost/端口/数据库名
+    # JDBC连接地址：需提前创建courseDesign数据库，替换localhost/端口/数据库名
     url: jdbc:mysql://localhost:3306/courseDesign?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
     username: root # 替换为你的MySQL用户名（如默认root）
     password: 123456 # 替换为你的MySQL密码（本地安装时设置的密码）
@@ -35,15 +42,7 @@ spring:
       max-lifetime: 1800000 # 连接最大生命周期
       connection-timeout: 30000 # 连接超时时间
 
-  # ========== Thymeleaf页面渲染配置（开发便利） ==========
-  thymeleaf:
-    cache: false # 关闭页面缓存（修改HTML后刷新浏览器即可生效）
-    prefix: classpath:/templates/ # 页面存放目录（resources/templates）
-    suffix: .html # 页面后缀
-    mode: HTML5 # 解析模式
-    encoding: UTF-8
-
-  # ========== WebSocket配置（实时推送算法状态） ==========
+  # ========== WebSocket配置（保留，给Vue前端实时推送算法状态） ==========
   websocket:
     enabled: true
 

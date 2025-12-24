@@ -50,13 +50,9 @@
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- 2. 服务端页面渲染 -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
+        <!-- 移除Thymeleaf依赖（改用Vue前端） -->
 
-        <!-- 3. 实时交互：WebSocket -->
+        <!-- 3. 实时交互：WebSocket（保留，给Vue前端推算法状态） -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
@@ -103,7 +99,7 @@
             <version>${easyexcel.version}</version>
         </dependency>
 
-        <!-- 7. 接口文档：Knife4j（适配SpringBoot2.x） -->
+        <!-- 7. 接口文档：Knife4j（适配SpringBoot2.x，方便Vue调试接口） -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
