@@ -12,11 +12,16 @@ public class ParamsController {
      */
 
 
-
     /**
-     * 读取文件参数
+     * 读取文件参数并校验合法性
      * @return 文件参数
      */
+
+
+    /**
+    * 随机生成逻辑地址序列
+    * @return 文件参数
+    */
 
 
     /**
