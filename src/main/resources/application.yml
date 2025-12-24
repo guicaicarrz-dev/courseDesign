@@ -1,0 +1,99 @@
+# 服务器核心配置
+server:
+  port: 8080 # Web服务端口，可自定义（如8081）
+  servlet:
+    context-path: / # 项目根路径，访问时无需加额外前缀
+    encoding:
+      charset: UTF-8 # 全局字符编码，避免中文乱码
+      enabled: true
+      force: true
+  tomcat:
+    uri-encoding: UTF-8 # Tomcat容器编码
+
+# Spring核心配置
+spring:
+  # 时间格式与时区配置（解决数据库时间偏移问题）
+  jackson:
+    time-zone: Asia/Shanghai
+    date-format: yyyy-MM-dd HH:mm:ss
+
+  # ========== MySQL数据库配置（核心，适配8.0.33版本） ==========
+  datasource:
+    # MySQL 8.x驱动类（必须用com.mysql.cj.jdbc.Driver，5.x用com.mysql.jdbc.Driver）
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # JDBC连接地址：需提前创建page_algorithm数据库，替换localhost/端口/数据库名
+    url: jdbc:mysql://localhost:3306/courseDesign?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
+    username: root # 替换为你的MySQL用户名（如默认root）
+    password: 123456 # 替换为你的MySQL密码（本地安装时设置的密码）
+    # 连接池配置（SpringBoot2.x默认使用HikariCP，性能最优）
+    hikari:
+      minimum-idle: 5 # 最小空闲连接数
+      maximum-pool-size: 20 # 最大连接数
+      auto-commit: true
+      idle-timeout: 30000 # 空闲连接超时时间
+      pool-name: CourseDesignHikariCP
+      max-lifetime: 1800000 # 连接最大生命周期
+      connection-timeout: 30000 # 连接超时时间
+
+  # ========== Thymeleaf页面渲染配置（开发便利） ==========
+  thymeleaf:
+    cache: false # 关闭页面缓存（修改HTML后刷新浏览器即可生效）
+    prefix: classpath:/templates/ # 页面存放目录（resources/templates）
+    suffix: .html # 页面后缀
+    mode: HTML5 # 解析模式
+    encoding: UTF-8
+
+  # ========== WebSocket配置（实时推送算法状态） ==========
+  websocket:
+    enabled: true
+
+# ========== MyBatis-Plus配置（简化数据库操作） ==========
+mybatis-plus:
+  # Mapper.xml文件路径（需在resources下创建mapper目录）
+  mapper-locations: classpath:mapper/**/*.xml
+  # 实体类包路径（替换为你项目中实际的entity包路径）
+  type-aliases-package: org.fourClass.courseDesign.entity
+  # 全局配置
+  global-config:
+    db-config:
+      id-type: AUTO # 主键自增（适配MySQL自增主键）
+      logic-delete-field: is_deleted # 逻辑删除字段名
+      logic-delete-value: 1 # 已删除标记
+      logic-not-delete-value: 0 # 未删除标记
+  # 控制台打印SQL（开发调试用，生产环境建议关闭）
+  configuration:
+    map-underscore-to-camel-case: true # 下划线字段名自动转驼峰属性名
+    cache-enabled: false # 关闭二级缓存
+    call-setters-on-nulls: true # 查询返回null字段（避免前端缺失字段）
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 打印SQL到控制台
+
+# ========== Knife4j/Swagger接口文档配置 ==========
+knife4j:
+  enable: true
+  setting:
+    language: zh-CN # 中文界面
+    enable-swagger-models: true # 显示实体类文档
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /v2/api-docs
+  # 解决SpringBoot2.7.x与Swagger路径匹配冲突
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+# ========== 日志配置（调试算法/数据库操作） ==========
+logging:
+  level:
+    # 业务代码日志级别（替换为你项目的实际包路径）
+    org.fourClass.courseDesign: DEBUG
+    # MyBatis日志级别（调试SQL执行）
+    com.baomidou.mybatisplus: DEBUG
+    # MySQL驱动日志（可选，调试数据库连接）
+    java.sql: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n" # 控制台日志格式
+  # 可选：将日志输出到文件
+  file:
+    name: logs/course-design.log # 日志文件存放路径（自动创建logs目录）
