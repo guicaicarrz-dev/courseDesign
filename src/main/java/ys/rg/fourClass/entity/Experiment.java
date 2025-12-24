@@ -8,5 +8,4 @@ import lombok.Data;
 public class Experiment {
     private Integer experimentId;
     private String experimentName;
-
 }
