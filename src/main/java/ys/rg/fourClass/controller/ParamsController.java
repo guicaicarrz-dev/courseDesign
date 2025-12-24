@@ -14,7 +14,7 @@ public class ParamsController {
 
     /**
      * 校验用户输入的系统参数合法性
-     * @param 用户定义参数
+     * @param 用户自定义参数
      * @return 是否合法
      */
 
