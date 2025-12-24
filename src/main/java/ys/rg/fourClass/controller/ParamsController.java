@@ -12,11 +12,19 @@ public class ParamsController {
      */
 
 
+
+    /**
+     * 读取文件参数
+     * @return 文件参数
+     */
+
+
     /**
      * 校验用户输入的系统参数合法性
      * @param 用户自定义参数
      * @return 是否合法
      */
+
 
 
 }

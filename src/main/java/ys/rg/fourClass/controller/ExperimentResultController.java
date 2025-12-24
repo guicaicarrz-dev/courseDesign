@@ -38,5 +38,9 @@ public class ExperimentResultController {
      * @return 删除结果
      */
 
-
+    /**
+     * 导出实验结果
+     * @param id 实验结果ID
+     * @return 文件
+     */
 }
