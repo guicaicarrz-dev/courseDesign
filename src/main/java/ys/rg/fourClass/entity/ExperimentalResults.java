@@ -10,7 +10,7 @@ import lombok.Data;
 public class ExperimentalResults {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
-    //实验类型
+    //算法类型
     private String algorithmType;
     //实验id
     private Integer experimentId;
@@ -22,10 +22,10 @@ public class ExperimentalResults {
     private String singleAccessTimeSequenceJson;
     //TLB命中状态序列
     private String tlbHitStatusSequenceJson;
-    //TLB命中率
-    private String tlbHitRateJson;
     //驻留内存集序列
     private String residentMemorySetSequenceJson;
+    //TLB命中率
+    private Double tlbHitRate;
     //缺页次数
     private Integer pageFaultCount;
     //页面置换次数
@@ -38,8 +38,8 @@ public class ExperimentalResults {
     private long realRunningTime;
     //模拟时间
     private Integer emulateRunningTime;
-    //平均模拟存取时间
-    private Double averageEmulateAccessTime;
+    //平均实际时间
+    private Double averageRealRunningTime;
     //结果创建时间
     private String createTime;
     //逻辑删除标记

@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!-- SpringBoot父工程（2.7.x适配Java 8，Web场景稳定） -->
+    <!-- SpringBoot父工程（2.7.x适配Java 8） -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -12,8 +12,9 @@
         <relativePath/>
     </parent>
 
-    <groupId>org.fourClass</groupId>
-    <artifactId>courseDesign</artifactId>
+    <!-- 修正为你的实际包名/项目名 -->
+    <groupId>ys.rg</groupId>
+    <artifactId>fourClass</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -23,48 +24,41 @@
         <!-- 版本统一管理 -->
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <mysql.version>8.0.33</mysql.version>
-        <easyexcel.version>3.3.2</easyexcel.version>
         <lombok.version>1.18.30</lombok.version>
-        <knife4j.version>2.0.9</knife4j.version> <!-- 降级为SpringBoot2.x兼容版本 -->
+        <knife4j.version>2.0.9</knife4j.version>
+        <fastjson2.version>2.0.48</fastjson2.version> <!-- FastJSON2版本 -->
     </properties>
 
-    <!-- 新增阿里云仓库，解决依赖下载失败问题 -->
+    <!-- 阿里云仓库（解决依赖下载慢/失败） -->
     <repositories>
         <repository>
             <id>aliyun-maven</id>
-            <name>Aliyun Maven Repository</name>
             <url>https://maven.aliyun.com/repository/public</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
+            <releases><enabled>true</enabled></releases>
+            <snapshots><enabled>false</enabled></snapshots>
         </repository>
     </repositories>
 
     <dependencies>
-        <!-- 1. Web核心依赖（必选） -->
+        <!-- 1. Web核心依赖（DTO接收/返回、接口映射） -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- 移除Thymeleaf依赖（改用Vue前端） -->
-
-        <!-- 3. 实时交互：WebSocket（保留，给Vue前端推算法状态） -->
+        <!-- 2. WebSocket（可选：实时推送算法执行状态给前端） -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
 
-        <!-- 4. 参数校验 -->
+        <!-- 3. 参数校验（DTO入参校验：@Valid/@NotEmpty等） -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
 
-        <!-- 5. 数据持久化 -->
+        <!-- 4. 数据持久化（MyBatis-Plus + MySQL） -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -76,10 +70,12 @@
             <version>${mysql.version}</version>
             <scope>runtime</scope>
         </dependency>
+
+        <!-- 5. JSON处理核心依赖（Handler序列化用） -->
         <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
+            <groupId>com.alibaba.fastjson2</groupId>
+            <artifactId>fastjson2</artifactId>
+            <version>${fastjson2.version}</version>
         </dependency>
 
         <!-- 6. 工具类 -->
@@ -91,21 +87,15 @@
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>easyexcel</artifactId>
-            <version>${easyexcel.version}</version>
+            <artifactId>commons-lang3</artifactId> <!-- 字符串/集合工具 -->
         </dependency>
 
-        <!-- 7. 接口文档：Knife4j（适配SpringBoot2.x，方便Vue调试接口） -->
+        <!-- 7. 接口文档（Knife4j/Swagger，调试DTO/接口） -->
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
             <version>${knife4j.version}</version>
         </dependency>
-        <!-- 补充Swagger2核心依赖（Knife4j2.x依赖此版本） -->
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
@@ -122,11 +112,10 @@
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.9.2</version>
         </dependency>
-        <!-- 解决Swagger2.9.2空指针问题 -->
         <dependency>
             <groupId>io.swagger</groupId>
             <artifactId>swagger-models</artifactId>
-            <version>1.6.0</version>
+            <version>1.6.0</version> <!-- 解决空指针问题 -->
         </dependency>
 
         <!-- 8. 测试依赖 -->
@@ -145,7 +134,7 @@
 
     <build>
         <plugins>
-            <!-- SpringBoot打包插件 -->
+            <!-- SpringBoot打包插件（修正启动类路径） -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -156,7 +145,8 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
-                    <mainClass>org.fourClass.courseDesign.CourseDesignApplication</mainClass>
+                    <!-- 你的启动类全路径 -->
+                    <mainClass>ys.rg.fourClass.CourseDesignApplication</mainClass>
                 </configuration>
             </plugin>
         </plugins>
