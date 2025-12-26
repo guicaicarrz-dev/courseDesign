@@ -1,8 +1,8 @@
 # 服务器核心配置
 server:
-  port: 8080 # Web服务端口，可自定义（如8081）
+  port: 8080 # Web服务端口
   servlet:
-    context-path: / # 项目根路径，访问时无需加额外前缀
+    context-path: / # 项目根路径
     encoding:
       charset: UTF-8 # 全局字符编码，避免中文乱码
       enabled: true
@@ -12,92 +12,79 @@ server:
 
 # Spring核心配置
 spring:
-  # 时间格式与时区配置（解决数据库时间偏移问题）
+  # 1. Jackson配置（适配DTO自动转JSON返回前端）
   jackson:
-    time-zone: Asia/Shanghai
-    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai # 时区统一
+    date-format: yyyy-MM-dd HH:mm:ss # 时间格式
+    default-property-inclusion: non_null # 忽略null字段，前端展示更简洁
+    serialization:
+      fail-on-empty-beans: false # 允许空DTO序列化（避免算法结果空对象报错）
+      write-date-timestamps-as-nanoseconds: false # 时间戳兼容前端
 
-    #读取文件（4946）
-  servlet:
-    multipart:
-      max-file-size: 10MB  # 单个文件最大限制
-      max-request-size: 10MB # 总请求大小限制
-  # ========== 跨域配置（关键：适配Vue前端跨域调用） ==========
-  cors:
-    allowed-origins: "*" # 开发环境允许所有来源，生产环境指定Vue前端域名（如http://localhost:8081）
-    allowed-methods: GET,POST,PUT,DELETE,OPTIONS
-    allowed-headers: "*"
-    max-age: 3600
+  # 2. 跨域配置（SpringBoot 2.7.x 正确写法，原配置不生效）
+  web:
+    cors:
+      allowed-origins: "http://localhost:8081,http://127.0.0.1:8081" # 开发环境前端地址
+      allowed-methods: GET,POST,PUT,DELETE,OPTIONS # 允许的请求方法
+      allowed-headers: "*" # 允许所有请求头
+      allow-credentials: true # 允许携带Cookie（如需）
+      max-age: 3600 # 预检请求缓存1小时，减少请求次数
 
-  # ========== MySQL数据库配置（核心，适配8.0.33版本） ==========
+  # 3. MySQL数据库配置（核心，适配8.0.33版本）
   datasource:
-    # MySQL 8.x驱动类（必须用com.mysql.cj.jdbc.Driver，5.x用com.mysql.jdbc.Driver）
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    # JDBC连接地址：需提前创建courseDesign数据库，替换localhost/端口/数据库名
-    url: jdbc:mysql://localhost:3306/courseDesign?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
-    username: root # 替换为你的MySQL用户名（如默认root）
-    password: 123456 # 替换为你的MySQL密码（本地安装时设置的密码）
-    # 连接池配置（SpringBoot2.x默认使用HikariCP，性能最优）
+    driver-class-name: com.mysql.cj.jdbc.Driver # MySQL 8.x驱动
+    url: jdbc:mysql://localhost:3306/coursedesign?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&useSSL=false&allowPublicKeyRetrieval=true&rewriteBatchedStatements=true
+    username: root # 替换为你的MySQL用户名
+    password: 123456 # 替换为你的MySQL密码
+    # HikariCP连接池配置（适配多线程算法执行）
     hikari:
-      minimum-idle: 5 # 最小空闲连接数
+      minimum-idle: 5 # 最小空闲连接
       maximum-pool-size: 20 # 最大连接数
       auto-commit: true
-      idle-timeout: 30000 # 空闲连接超时时间
-      pool-name: CourseDesignHikariCP
+      idle-timeout: 30000 # 空闲连接超时
+      pool-name: PageReplacementHikariCP
       max-lifetime: 1800000 # 连接最大生命周期
-      connection-timeout: 30000 # 连接超时时间
+      connection-timeout: 30000 # 连接超时
 
-  # ========== WebSocket配置（保留，给Vue前端实时推送算法状态） ==========
-  websocket:
-    enabled: true
-
-# ========== MyBatis-Plus配置（简化数据库操作） ==========
+# 4. MyBatis-Plus配置（核心：让Json2StringTypeHandler生效）
 mybatis-plus:
-  # Mapper.xml文件路径（需在resources下创建mapper目录）
-  mapper-locations: classpath:mapper/**/*.xml
-  # 实体类包路径（替换为你项目中实际的entity包路径）
-  type-aliases-package: org.fourClass.courseDesign.entity
-  # 全局配置
+  mapper-locations: classpath:mapper/**/*.xml # Mapper.xml文件路径
+  type-aliases-package: ys.rg.fourClass.entity # 你的实体类包路径（关键修正）
+  type-handlers-package: ys.rg.fourClass.handler # 扫描自定义JSON Handler（关键）
   global-config:
     db-config:
-      id-type: AUTO # 主键自增（适配MySQL自增主键）
-      logic-delete-field: is_deleted # 逻辑删除字段名
+      id-type: AUTO # 主键自增
+      logic-delete-field: isDeleted # 匹配你的实体逻辑删除字段（isDeleted/isDelete）
       logic-delete-value: 1 # 已删除标记
       logic-not-delete-value: 0 # 未删除标记
-  # 控制台打印SQL（开发调试用，生产环境建议关闭）
   configuration:
-    map-underscore-to-camel-case: true # 下划线字段名自动转驼峰属性名
+    map-underscore-to-camel-case: true # 下划线转驼峰（适配数据库字段）
     cache-enabled: false # 关闭二级缓存
-    call-setters-on-nulls: true # 查询返回null字段（避免前端缺失字段）
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 打印SQL到控制台
+    call-setters-on-nulls: true # 查询返回null字段（前端不缺失）
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 打印SQL（开发调试）
 
-# ========== Knife4j/Swagger接口文档配置 ==========
+# 5. Knife4j/Swagger配置（调试接口用）
 knife4j:
   enable: true
   setting:
     language: zh-CN # 中文界面
-    enable-swagger-models: true # 显示实体类文档
+    enable-swagger-models: true # 显示DTO/实体文档
 springfox:
   documentation:
     swagger:
       v2:
         path: /v2/api-docs
-  # 解决SpringBoot2.7.x与Swagger路径匹配冲突
   mvc:
     pathmatch:
-      matching-strategy: ant_path_matcher
+      matching-strategy: ant_path_matcher # 解决SpringBoot2.7.x与Swagger冲突
 
-# ========== 日志配置（调试算法/数据库操作） ==========
+# 6. 日志配置（调试Handler/算法执行）
 logging:
   level:
-    # 业务代码日志级别（替换为你项目的实际包路径）
-    org.fourClass.courseDesign: DEBUG
-    # MyBatis日志级别（调试SQL执行）
-    com.baomidou.mybatisplus: DEBUG
-    # MySQL驱动日志（可选，调试数据库连接）
-    java.sql: INFO
+    ys.rg.fourClass: DEBUG # 你的业务包日志级别
+    com.baomidou.mybatisplus: DEBUG # MyBatis-Plus日志
+    java.sql: INFO # 数据库日志
   pattern:
-    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n" # 控制台日志格式
-  # 可选：将日志输出到文件
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n"
   file:
-    name: logs/course-design.log # 日志文件存放路径（自动创建logs目录）
+    name: logs/page-replacement.log # 日志文件路径

@@ -8,6 +8,7 @@ import lombok.Data;
 @Data
 @TableName("experiment")
 public class Experiment {
+
     //实验id
     @TableId(value = "experiment_id", type = IdType.AUTO)
     private Integer experimentId;

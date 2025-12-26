@@ -12,7 +12,7 @@
         <relativePath/>
     </parent>
 
-    <!-- 修正为你的实际包名/项目名 -->
+    <!-- 项目信息 -->
     <groupId>ys.rg</groupId>
     <artifactId>fourClass</artifactId>
     <version>1.0-SNAPSHOT</version>
@@ -25,7 +25,6 @@
         <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
         <mysql.version>8.0.33</mysql.version>
         <lombok.version>1.18.30</lombok.version>
-        <knife4j.version>2.0.9</knife4j.version>
         <fastjson2.version>2.0.48</fastjson2.version> <!-- FastJSON2版本 -->
     </properties>
 
@@ -90,35 +89,7 @@
             <artifactId>commons-lang3</artifactId> <!-- 字符串/集合工具 -->
         </dependency>
 
-        <!-- 7. 接口文档（Knife4j/Swagger，调试DTO/接口） -->
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
-            <version>${knife4j.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>2.9.2</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>io.swagger</groupId>
-                    <artifactId>swagger-models</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>2.9.2</version>
-        </dependency>
-        <dependency>
-            <groupId>io.swagger</groupId>
-            <artifactId>swagger-models</artifactId>
-            <version>1.6.0</version> <!-- 解决空指针问题 -->
-        </dependency>
-
-        <!-- 8. 测试依赖 -->
+        <!-- 7. 测试依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -140,7 +111,7 @@
 
     <build>
         <plugins>
-            <!-- SpringBoot打包插件（修正启动类路径） -->
+            <!-- SpringBoot打包插件 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -151,7 +122,7 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
-                    <!-- 你的启动类全路径 -->
+                    <!-- 启动类全路径 -->
                     <mainClass>ys.rg.fourClass.CourseDesignApplication</mainClass>
                 </configuration>
             </plugin>

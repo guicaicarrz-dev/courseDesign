@@ -4,8 +4,10 @@ import lombok.Data;
 
 @Data
 public class AlgorithmRequestDTO {
+    //实验id
+    private Integer experimentId;
     //算法类型
     private String algorithmType;
-    //begin=1/stop=0
-    private boolean action=false;
+    //算法状态
+    private String command;
 }
