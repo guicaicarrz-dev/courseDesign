@@ -4,15 +4,6 @@ import org.apache.commons.lang3.StringUtils;
 import static ys.rg.fourClass.util.CheckTheFormat.ADDRESS_SEQ_REGEX;
 
 public class AddressSequenceValidator {
-
-    public static boolean isValid(String addressSeq) {
-        // 空值返回false
-        if (StringUtils.isBlank(addressSeq)) {
-            return false;
-        }
-        return addressSeq.matches(ADDRESS_SEQ_REGEX);
-    }
-
     /**
      * 校验地址序列
      * @param addressSeq 地址序列
