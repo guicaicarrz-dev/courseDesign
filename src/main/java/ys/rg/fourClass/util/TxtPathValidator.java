@@ -9,7 +9,7 @@ public class TxtPathValidator {
      * @param txtPath txt文件地址
      * @return 保存后的结果
      */
-    public static String validateWithMsg(String txtPath) {
+    public static String validateWithMsg1(String txtPath) {
         if (StringUtils.isBlank(txtPath)) {
             return "txt文件地址为空";
         }

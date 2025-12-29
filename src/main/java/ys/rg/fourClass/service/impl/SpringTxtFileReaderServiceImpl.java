@@ -4,6 +4,7 @@ import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import ys.rg.fourClass.service.SpringTxtFileReaderService;
 import ys.rg.fourClass.util.AddressSequenceValidator;
+import ys.rg.fourClass.util.TxtPathValidator;
 
 import javax.annotation.Resource;
 import java.io.BufferedReader;
@@ -19,8 +20,8 @@ public class SpringTxtFileReaderServiceImpl implements SpringTxtFileReaderServic
     @Override
     public String readTxtByResourceLoader(String filePath) throws IOException {
         //校验地址正则
-        if(!AddressSequenceValidator.validateWithMsg(filePath).isEmpty()){
-            return AddressSequenceValidator.validateWithMsg(filePath);
+        if(!TxtPathValidator.validateWithMsg1(filePath).isEmpty()){
+            return TxtPathValidator.validateWithMsg1(filePath);
         }
 
         // 获取Resource对象
