@@ -79,81 +79,8 @@ public class ExperimentServiceImpl implements ExperimentService {
     }
 
     @Override
-    public Result deriveExperiment(HttpServletResponse response) {
-        try {
-            List<Experiment> experiments = experimentMapper.selectList(
-                new LambdaQueryWrapper<Experiment>()
-                    .eq(Experiment::getIsDelete, false)
-                    .orderByAsc(Experiment::getExperimentId)
-            );
-
-            if (experiments.isEmpty()) {
-                return Result.fail("没有可导出的实验数据");
-            }
-
-            List<ExperimentalResults> results = experimentalResultsMapper.selectList(
-                new LambdaQueryWrapper<ExperimentalResults>()
-                    .eq(ExperimentalResults::getIsDeleted, false)
-                    .orderByAsc(ExperimentalResults::getExperimentId)
-            );
-
-            Map<Integer, List<ExperimentalResults>> resultsMap = new HashMap<>();
-            for (ExperimentalResults result : results) {
-                resultsMap.computeIfAbsent(result.getExperimentId(), k -> new ArrayList<>()).add(result);
-            }
-
-            List<ExcelExperimentalResultsDTO> excelDataList = new ArrayList<>();
-            for (Experiment experiment : experiments) {
-                List<ExperimentalResults> experimentResults = resultsMap.getOrDefault(experiment.getExperimentId(), new ArrayList<>());
-                for (ExperimentalResults result : experimentResults) {
-                    ExcelExperimentalResultsDTO dto = new ExcelExperimentalResultsDTO();
-                    dto.setExperimentId(experiment.getExperimentId());
-                    dto.setExperimentName(experiment.getExperimentName());
-                    dto.setLogicalAddressSequenceJson(experiment.getLogicalAddressSequenceJson() != null ? experiment.getLogicalAddressSequenceJson().toString() : null);
-                    dto.setLogicalPageNumberSequenceJson(experiment.getLogicalPageNumberSequenceJson() != null ? experiment.getLogicalPageNumberSequenceJson().toString() : null);
-                    dto.setLogicalAddressSequenceSize(experiment.getLogicalAddressSequenceSize());
-                    dto.setResidentMemorySetCount(experiment.getResidentMemorySetCount());
-                    dto.setIsUseTlb(experiment.getIsUseTlb());
-                    dto.setMemoryAccessTime(experiment.getMemoryAccessTime());
-                    dto.setFastTableAccessTime(experiment.getFastTableAccessTime());
-                    dto.setPageFaultTime(experiment.getPageFaultTime());
-                    dto.setCreateTime(experiment.getCreateTime());
-
-                    dto.setId(result.getId());
-                    dto.setAlgorithmType(result.getAlgorithmType());
-                    dto.setResultExperimentId(result.getExperimentId());
-                    dto.setPhysicalPageNumberSequenceJson(result.getPhysicalPageNumberSequenceJson() != null ? result.getPhysicalPageNumberSequenceJson().toString() : null);
-                    dto.setMemoryAddressSequenceJson(result.getMemoryAddressSequenceJson() != null ? result.getMemoryAddressSequenceJson().toString() : null);
-                    dto.setSingleAccessTimeSequenceJson(result.getSingleAccessTimeSequenceJson() != null ? result.getSingleAccessTimeSequenceJson().toString() : null);
-                    dto.setTlbHitStatusSequenceJson(result.getTlbHitStatusSequenceJson() != null ? result.getTlbHitStatusSequenceJson().toString() : null);
-                    dto.setResidentMemorySetSequenceJson(result.getResidentMemorySetSequenceJson() != null ? result.getResidentMemorySetSequenceJson().toString() : null);
-                    dto.setTlbHitRate(result.getTlbHitRate());
-                    dto.setPageFaultCount(result.getPageFaultCount());
-                    dto.setPageReplacementCount(result.getPageReplacementCount());
-                    dto.setPageFaultRate(result.getPageFaultRate());
-                    dto.setPageHitRate(result.getPageHitRate());
-                    dto.setRealRunningTime(result.getRealRunningTime());
-                    dto.setEmulateRunningTime(result.getEmulateRunningTime());
-                    dto.setAverageRealRunningTime(result.getAverageRealRunningTime());
-                    dto.setResultCreateTime(result.getCreateTime());
-
-                    excelDataList.add(dto);
-                }
-            }
-
-            String fileName = URLEncoder.encode("实验结果数据", StandardCharsets.UTF_8.toString()) + ".xlsx";
-            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-            response.setCharacterEncoding("utf-8");
-            response.setHeader("Content-disposition", "attachment;filename*=utf-8''" + fileName);
-
-            EasyExcel.write(response.getOutputStream(), ExcelExperimentalResultsDTO.class)
-                    .sheet("实验结果")
-                    .doWrite(excelDataList);
-
-            return Result.ok("导出成功");
-        } catch (IOException e) {
-            return Result.fail("导出失败: " + e.getMessage());
-        }
+    public Result deriveExperiment() {
+        return null;
     }
 }
 
