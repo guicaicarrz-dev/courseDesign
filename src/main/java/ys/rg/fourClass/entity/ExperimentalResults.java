@@ -1,12 +1,17 @@
 package ys.rg.fourClass.entity;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
+import ys.rg.fourClass.handler.*;
+
+import java.util.List;
+import java.util.Map;
 
 @Data
-@TableName("experimental_results")
+@TableName(value="experimental_results",autoResultMap = true)
 public class ExperimentalResults {
     @TableId(value = "id", type = IdType.AUTO)
     private Integer id;
@@ -15,15 +20,20 @@ public class ExperimentalResults {
     //实验id
     private Integer experimentId;
     //物理页号序列
-    private String physicalPageNumberSequenceJson;
+    @TableField(typeHandler = IntegerList2JsonTypeHandler.class)
+    private List<Integer> physicalPageNumberSequenceJson;
     //内存地址序列
-    private String memoryAddressSequenceJson;
+    @TableField(typeHandler = StringList2JsonTypeHandler.class)
+    private List<String> memoryAddressSequenceJson;
     //单次存取时间序列
-    private String singleAccessTimeSequenceJson;
+    @TableField(typeHandler = LongList2JsonTypeHandler.class)
+    private List<Long> singleAccessTimeSequenceJson;
     //TLB命中状态序列
-    private String tlbHitStatusSequenceJson;
+    @TableField(typeHandler = BooleanList2JsonTypeHandler.class)
+    private List<Boolean> tlbHitStatusSequenceJson;
     //驻留内存集序列
-    private String residentMemorySetSequenceJson;
+    @TableField(typeHandler = IntegerList2JsonTypeHandler.class)
+    private List<Integer> residentMemorySetSequenceJson;
     //TLB命中率
     private Double tlbHitRate;
     //缺页次数

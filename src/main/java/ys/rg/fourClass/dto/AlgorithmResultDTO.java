@@ -21,7 +21,7 @@ public class AlgorithmResultDTO {
     // TLB命中率
     private Double tlbHitRate;
     // 驻留内存集变化序列（每一步的内存页状态）
-    private List<Map<Integer, Integer>> residentMemorySetSequence;
+    private List<Integer> residentMemorySetSequence;
     // 缺页次数
     private Integer pageFaultCount;
     // 页面置换次数

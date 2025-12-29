@@ -51,6 +51,9 @@ mybatis-plus:
   mapper-locations: classpath:mapper/**/*.xml # Mapper.xml文件路径
   type-aliases-package: ys.rg.fourClass.entity # 你的实体类包路径（关键修正）
   type-handlers-package: ys.rg.fourClass.handler # 扫描自定义JSON Handler（关键）
+  # 配置扫描包（重要）
+  mapper-scan:
+    base-package: ys.rg.fourClass.mapper
   global-config:
     db-config:
       id-type: AUTO # 主键自增
@@ -63,28 +66,29 @@ mybatis-plus:
     call-setters-on-nulls: true # 查询返回null字段（前端不缺失）
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 打印SQL（开发调试）
 
-# 5. Knife4j/Swagger配置（调试接口用）
-knife4j:
-  enable: true
-  setting:
-    language: zh-CN # 中文界面
-    enable-swagger-models: true # 显示DTO/实体文档
-springfox:
-  documentation:
-    swagger:
-      v2:
-        path: /v2/api-docs
-  mvc:
-    pathmatch:
-      matching-strategy: ant_path_matcher # 解决SpringBoot2.7.x与Swagger冲突
-
-# 6. 日志配置（调试Handler/算法执行）
+# ============================================
+# 日志配置
+# ============================================
 logging:
+  # 1. 日志级别配置
   level:
     ys.rg.fourClass: DEBUG # 你的业务包日志级别
-    com.baomidou.mybatisplus: DEBUG # MyBatis-Plus日志
-    java.sql: INFO # 数据库日志
+    com.baomidou.mybatisplus: DEBUG # MyBatis-Plus日志级别
+    java.sql: INFO # 数据库SQL日志级别
+    org.springframework: INFO # Spring框架日志级别
+
+  # 2. 控制台日志格式
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{50} - %msg%n"
+
+  # 3. 文件日志配置
   file:
     name: logs/page-replacement.log # 日志文件路径
+    max-history: 30 # 保留30天的日志
+    max-size: 10MB # 单个日志文件最大10MB
+
+  # 4. 日志文件滚动策略
+  logback:
+    rollingpolicy:
+      max-file-size: 10MB
+      total-size-cap: 100MB

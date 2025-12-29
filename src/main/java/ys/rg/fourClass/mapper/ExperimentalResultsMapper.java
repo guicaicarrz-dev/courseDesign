@@ -1,8 +1,8 @@
 package ys.rg.fourClass.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 import ys.rg.fourClass.entity.ExperimentalResults;
 
-@Mapper
+@Repository
 public interface ExperimentalResultsMapper extends BaseMapper<ExperimentalResults>{}
