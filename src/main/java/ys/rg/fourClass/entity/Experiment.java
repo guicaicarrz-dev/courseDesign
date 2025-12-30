@@ -31,7 +31,7 @@ public class Experiment {
     //进程驻留内存集数量
     private Integer residentMemorySetCount;
     //快表大小
-    private Integer TlbSize;
+    private Integer tlbSize;
     //是否采用TLB
     private Boolean isUseTlb;
     //内存访问时间

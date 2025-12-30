@@ -39,7 +39,11 @@ public class ExcelDTO {
     @ColumnWidth(18)
     private Integer residentMemorySetCount;
 
-    @ExcelProperty(value = {"实验信息", "是否采用TLB"}, index = 6)
+    @ExcelProperty(value = {"实验信息", "快表大小"}, index = 6)
+    @ColumnWidth(15)
+    private Integer tlbSize;
+
+    @ExcelProperty(value = {"实验信息", "是否采用TLB"}, index = 7)
     @ColumnWidth(12)
     private Boolean isUseTlb;
 
@@ -246,63 +250,63 @@ public class ExcelDTO {
     @DateTimeFormat("yyyy-MM-dd HH:mm:ss")
     private String createTime3;
     // ==================== 第四条 ExperimentalResults ====================
-    @ExcelProperty(value = {"实验结果4", "算法类型"}, index = 41)
+    @ExcelProperty(value = {"实验结果4", "算法类型"}, index = 56)
     @ColumnWidth(20)
     private String algorithmType4;
 
-    @ExcelProperty(value = {"实验结果4", "物理页号序列"}, index = 42)
+    @ExcelProperty(value = {"实验结果4", "物理页号序列"}, index = 57)
     @ColumnWidth(30)
     private String physicalPageNumberSequenceJson4;
 
-    @ExcelProperty(value = {"实验结果4", "内存地址序列"}, index = 43)
+    @ExcelProperty(value = {"实验结果4", "内存地址序列"}, index = 58)
     @ColumnWidth(30)
     private String memoryAddressSequenceJson4;
 
-    @ExcelProperty(value = {"实验结果4","单次存取时间序列"}, index = 44)
+    @ExcelProperty(value = {"实验结果4","单次存取时间序列"}, index = 59)
     @ColumnWidth(30)
     private String singleAccessTimeSequenceJson4;
 
-    @ExcelProperty(value = {"实验结果4", "TLB命中状态序列"}, index = 45)
+    @ExcelProperty(value = {"实验结果4", "TLB命中状态序列"}, index = 60)
     @ColumnWidth(30)
     private String tlbHitStatusSequenceJson4;
 
-    @ExcelProperty(value = {"实验结果4", "驻留内存集序列"}, index = 46)
+    @ExcelProperty(value = {"实验结果4", "驻留内存集序列"}, index = 61)
     @ColumnWidth(30)
     private String residentMemorySetSequenceJson4;
 
-    @ExcelProperty(value = {"实验结果4", "TLB命中率"}, index = 47)
+    @ExcelProperty(value = {"实验结果4", "TLB命中率"}, index = 62)
     @ColumnWidth(12)
     private Double tlbHitRate4;
 
-    @ExcelProperty(value = {"实验结果4", "缺页次数"}, index = 48)
+    @ExcelProperty(value = {"实验结果4", "缺页次数"}, index = 63)
     @ColumnWidth(10)
     private Integer pageFaultCount4;
 
-    @ExcelProperty(value = {"实验结果4", "页面置换次数"}, index = 49)
+    @ExcelProperty(value = {"实验结果4", "页面置换次数"}, index = 64)
     @ColumnWidth(12)
     private Integer pageReplacementCount4;
 
-    @ExcelProperty(value = {"实验结果4", "缺页率"}, index = 50)
+    @ExcelProperty(value = {"实验结果4", "缺页率"}, index = 65)
     @ColumnWidth(10)
     private Double pageFaultRate4;
 
-    @ExcelProperty(value = {"实验结果4", "页面命中率"}, index = 51)
+    @ExcelProperty(value = {"实验结果4", "页面命中率"}, index = 66)
     @ColumnWidth(12)
     private Double pageHitRate4;
 
-    @ExcelProperty(value = {"实验结果4", "实际运行时间(ns)"}, index = 52)
+    @ExcelProperty(value = {"实验结果4", "实际运行时间(ns)"}, index = 67)
     @ColumnWidth(18)
     private Long realRunningTime4;
 
-    @ExcelProperty(value = {"实验结果4", "模拟运行时间(ms)"}, index = 53)
+    @ExcelProperty(value = {"实验结果4", "模拟运行时间(ms)"}, index = 68)
     @ColumnWidth(15)
     private Integer emulateRunningTime4;
 
-    @ExcelProperty(value = {"实验结果4", "平均实际运行时间(ns)"}, index = 54)
+    @ExcelProperty(value = {"实验结果4", "平均实际运行时间(ns)"}, index = 69)
     @ColumnWidth(22)
     private Double averageRealRunningTime4;
 
-    @ExcelProperty(value = {"实验结果4", "结果创建时间"}, index = 55)
+    @ExcelProperty(value = {"实验结果4", "结果创建时间"}, index = 70)
     @ColumnWidth(20)
     @DateTimeFormat("yyyy-MM-dd HH:mm:ss")
     private String createTime4;

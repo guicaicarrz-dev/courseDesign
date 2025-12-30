@@ -1,7 +1,6 @@
 package ys.rg.fourClass.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import ys.rg.fourClass.dto.ExperimentDTO;
 import ys.rg.fourClass.dto.ExperimentalResultsDTO;
@@ -10,7 +9,6 @@ import ys.rg.fourClass.service.ExperimentService;
 import ys.rg.fourClass.service.QueryExperimentResultService;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -60,11 +58,12 @@ public class ExperimentResultController {
 
     /**
      * 导出实验结果成表格
+     * @param path 保存地址
      * @return 是否成功导出
      */
-    @GetMapping("/deriveExperiment")
-    public Result deriveExperiment() {
-        return experimentService.deriveExperiment();
+    @PostMapping("/deriveExperiment")
+    public Result deriveExperiment(String path) {
+        return experimentService.deriveExperiment(path);
     }
 
 }
