@@ -1,6 +1,9 @@
 package ys.rg.fourClass.util;
 
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.Collection;
+
 import static ys.rg.fourClass.util.CheckTheFormat.ADDRESS_SEQ_REGEX;
 
 public class AddressSequenceValidator {
@@ -22,4 +25,5 @@ public class AddressSequenceValidator {
         }
         return null;
     }
+
 }
