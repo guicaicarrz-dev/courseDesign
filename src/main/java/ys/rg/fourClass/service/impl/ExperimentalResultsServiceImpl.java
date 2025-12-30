@@ -13,8 +13,8 @@ public class ExperimentalResultsServiceImpl extends ServiceImpl<ExperimentalResu
     @Autowired
     private ExperimentalResultsMapper experimentalResultsMapper;
     @Override
-    public ExperimentalResults getExperimentalResultsById(Integer id)
-    {
-        return experimentalResultsMapper.selectById(id);
+    public void saveAlgorithmResult(ExperimentalResults experimentalResults) {
+        ExperimentalResults results = new ExperimentalResults();
+        experimentalResultsMapper.insert(results); // MyBatis-Plus通用方法，存入数据库
     }
 }

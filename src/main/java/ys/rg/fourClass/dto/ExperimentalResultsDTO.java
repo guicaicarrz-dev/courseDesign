@@ -3,6 +3,7 @@ package ys.rg.fourClass.dto;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import ys.rg.fourClass.handler.BooleanList2JsonTypeHandler;
 import ys.rg.fourClass.handler.IntegerList2JsonTypeHandler;

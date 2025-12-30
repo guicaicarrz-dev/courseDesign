@@ -1,5 +1,6 @@
 package ys.rg.fourClass.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -10,13 +11,15 @@ import java.util.List;
  * 用法：前端POST /experiment/init时传参，后端通过@Valid校验参数合法性
  */
 @Data
+@AllArgsConstructor
 public class ExperimentInitDTO {
     private String experimentName; // 实验名称
     @NotEmpty(message = "地址序列不能为空")
-    private List<String> logicalAddressSequence; // 逻辑地址序列
+    private String logicalAddressSequence; // 逻辑地址序列
     @NotNull(message = "驻留内存数不能为空")
     private Integer residentMemorySetCount = 3; // 驻留内存集数量
-    private Boolean isUseTLB = true; // 是否启用TLB
+    private Boolean isUseTlb = true; // 是否启用TLB
+    private Integer TlbSize = 100;//快表大小
     private Integer memoryAccessTime = 100; // 内存访问时间(ms)
     private Integer fastTableAccessTime = 10; // 快表访问时间(ms)
     private Integer pageFaultTime = 2000; // 缺页处理时间(ms)

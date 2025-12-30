@@ -8,7 +8,6 @@ import lombok.Data;
 import ys.rg.fourClass.handler.*;
 
 import java.util.List;
-import java.util.Map;
 
 @Data
 @TableName(value="experimental_results",autoResultMap = true)

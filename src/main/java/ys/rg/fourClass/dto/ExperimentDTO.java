@@ -3,6 +3,7 @@ package ys.rg.fourClass.dto;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import ys.rg.fourClass.handler.IntegerList2JsonTypeHandler;
 import ys.rg.fourClass.handler.StringList2JsonTypeHandler;
@@ -23,6 +24,8 @@ public class ExperimentDTO {
     private Integer logicalAddressSequenceSize;
     //进程驻留内存集数量
     private Integer residentMemorySetCount;
+    //快表大小
+    private Integer TlbSize;
     //是否采用TLB
     private Boolean isUseTlb;
     //内存访问时间

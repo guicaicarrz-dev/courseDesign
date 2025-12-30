@@ -4,5 +4,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import ys.rg.fourClass.entity.ExperimentalResults;
 
 public interface ExperimentalResultsService extends IService <ExperimentalResults> {
-     ExperimentalResults getExperimentalResultsById(Integer id);
+    void saveAlgorithmResult(ExperimentalResults experimentalResults);
 }
