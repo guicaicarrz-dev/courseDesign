@@ -22,7 +22,8 @@ public interface ExperimentService {
     List<ExperimentDTO> getExperiment(int page, int size);
     /**
      * 导出实验结果
+     * @param path 保存地址
      * @return 文件
      */
-    Result deriveExperiment();
+    Result deriveExperiment(String path);
 }
