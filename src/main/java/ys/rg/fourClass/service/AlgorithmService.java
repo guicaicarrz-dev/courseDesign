@@ -58,21 +58,27 @@ public class AlgorithmService {
     public void pauseAlgorithm(Integer experimentId, String algorithmType) {
         String taskKey = experimentId + "_" + algorithmType;
         PageReplacementTask task = taskMap.get(taskKey);
-        if (task != null) task.pause();
+        if (task != null) {
+            task.pause();
+        }
     }
 
     // 继续算法
     public void resumeAlgorithm(Integer experimentId, String algorithmType) {
         String taskKey = experimentId + "_" + algorithmType;
         PageReplacementTask task = taskMap.get(taskKey);
-        if (task != null) task.resume();
+        if (task != null) {
+            task.resume();
+        }
     }
 
     // 停止单个算法
     public void stopAlgorithm(Integer experimentId, String algorithmType) {
         String taskKey = experimentId + "_" + algorithmType;
         PageReplacementTask task = taskMap.remove(taskKey);
-        if (task != null) task.stop();
+        if (task != null) {
+            task.stop();
+        }
     }
 
     // 停止实验下所有算法

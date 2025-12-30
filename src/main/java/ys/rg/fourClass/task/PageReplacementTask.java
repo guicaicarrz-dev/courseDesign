@@ -125,7 +125,9 @@ public class PageReplacementTask implements Runnable {
                 // 检查暂停
                 lock.lock();
                 try {
-                    while (isPaused) pauseCondition.await();
+                    while (isPaused) {
+                        pauseCondition.await();
+                    }
                 } finally {
                     lock.unlock();
                 }

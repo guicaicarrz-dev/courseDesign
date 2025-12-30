@@ -2,6 +2,8 @@ package ys.rg.fourClass.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import ys.rg.fourClass.dto.ExperimentDTO;
 import ys.rg.fourClass.dto.ExperimentalResultsDTO;
 import ys.rg.fourClass.dto.Result;
@@ -14,6 +16,8 @@ import java.util.List;
 /**
  * 实验结果控制器
  */
+@RestController
+@RequestMapping("/ExperimentResult")
 public class ExperimentResultController {
 
     @Resource
