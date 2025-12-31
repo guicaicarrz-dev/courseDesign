@@ -12,6 +12,8 @@ server:
 
 # Spring核心配置
 spring:
+  main:
+    allow-circular-references: true # 允许循环依赖
   # 1. Jackson配置（适配DTO自动转JSON返回前端）
   jackson:
     time-zone: Asia/Shanghai # 时区统一
