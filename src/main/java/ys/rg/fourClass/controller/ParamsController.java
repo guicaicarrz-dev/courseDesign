@@ -28,11 +28,12 @@ public class ParamsController {
      * 获取默认系统参数
      * @return 默认系统参数
      */
-    @GetMapping("/findDefault")
+   /** @GetMapping("/findDefault")
     public Result findDefault(){
         int[] a= {0,0,0};
         return Result.ok(a);
     }
+   */
 
     /**
      * 读取文件参数并校验合法性
